@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int removeElement(int A[], int n, int elem) {
+        if (A == NULL || n <= 0) {
+            return n;
+        }
+        
+        int current_indx = 0;
+        for (int i = 0; i < n; ++i) {
+            if (A[i] != elem) {
+                A[current_indx] = A[i];
+                ++current_indx;
+                
+            }
+        }
+        
+        return current_indx;
+    }
+};
