@@ -1,0 +1,64 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+        if (l1 == NULL) {
+            return l2;
+        }
+        if (l2 == NULL) {
+            return l1;
+        }
+        
+        ListNode * t1 = l1;
+        ListNode * t2 = l2;
+        int signal = 0;
+        ListNode * newHead = new ListNode(0);
+        ListNode * cur = newHead;
+        while (t1 != NULL && t2 != NULL) {
+            int val = t1->val + t2->val + signal;
+            int nval = val >= 10 ? (val - 10) : val;
+            signal = val >= 10 ? 1 : 0;
+ //           ListNode *tmp = new ListNode(nval);
+            t1->val = nval;
+            cur->next = t1;
+            cur = t1;
+            t1 = t1->next;
+            t2 = t2->next;
+        }
+        
+        while (t1 != NULL) {
+            int val = t1->val + signal;
+            int nval = val >= 10 ? (val - 10) : val;
+            signal = val >= 10 ? 1 : 0;
+            cur->next = t1;
+            cur = t1;
+            t1->val = nval;
+            cur = t1;
+            t1 = t1->next;
+        }
+        while (t2 != NULL) {
+            int val = t2->val + signal;
+            int nval = val >= 10 ? (val - 10) : val;
+            signal = val >= 10 ? 1 : 0;
+            cur->next = t2;
+            cur = t2;
+            t2->val = nval;
+            cur = t2;
+            t2 = t2->next;
+        }
+        
+        if (signal) {
+            ListNode *newNode = new ListNode(1);
+            cur->next = newNode;
+        }
+        
+        return newHead->next;
+    }
+};
